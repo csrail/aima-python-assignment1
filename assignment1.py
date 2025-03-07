@@ -36,7 +36,10 @@ def read_initial_state_from_file(filename):
             line = f.readline()
 
     # map has been generated, so set to state's first element
+    # tuple conversions: firstly the map then the state
+    map = tuple(tuple(row) for row in map)
     state[0] = map
+    state = tuple(state)
 
     return state
 
