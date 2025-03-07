@@ -6,7 +6,36 @@ def read_initial_state_from_file(filename):
     # Task 1
     # Return an initial state constructed using a configuration in a file.
     # Replace the line below with your code.
-    raise NotImplementedError
+
+    # initialise state as a list of three elements
+    # first element is the map
+    # second element is the agent's location
+    # third element is the agent's facing direction
+    state = [None,None,None]
+    with open(file="./assignment1config.txt", mode="r") as f:
+        # the first two lines of the config file denote the rows and columns
+        # of the zen garden
+        rows = int(f.readline()[0])
+        columns = int(f.readline()[0])
+
+        # create map based on rows and columns
+        map = []
+        for i in range(0,rows):
+            map.append([])
+            for _ in range(0,columns):
+                map[i].append('')
+
+        line = f.readline()
+        while line:
+            rockRow = int(line[0])
+            rockCol = int(line[2])
+            map[rockRow][rockCol] = 'rock'
+            line = f.readline()
+
+    # map has been generated, so set to state's first element
+    state[0] = map
+
+    return state
 
 class ZenPuzzleGarden(Problem):
     def __init__(self, initial):
@@ -92,10 +121,10 @@ def beam_search(problem, f, beam_width):
 if __name__ == "__main__":
 
     # Task 1 test code
-    '''
+    
     print('The loaded initial state is visualised below.')
     visualise(read_initial_state_from_file('assignment1config.txt'))
-    '''
+    
 
     # Task 2 test code
     '''
