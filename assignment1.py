@@ -27,8 +27,9 @@ def read_initial_state_from_file(filename):
 
         line = f.readline()
         while line:
-            rockRow = int(line[0])
-            rockCol = int(line[2])
+            values = line.split(',')
+            rockRow = int(values[0])
+            rockCol = int(values[1])
             map[rockRow][rockCol] = 'rock'
             line = f.readline()
 
