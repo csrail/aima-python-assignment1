@@ -19,12 +19,7 @@ def read_initial_state_from_file(filename):
         columns = int(f.readline()[0])
 
         # create map based on rows and columns
-        # map = []
-        # for i in range(0,rows):
-        #     map.append([])
-        #     for _ in range(0,columns):
-        #         map[i].append('')
-        # create this as a nested list comprehension
+        # create this from a nested list comprehension
         map = [['' for _ in range(columns)] for _ in range(rows)]
 
         line = f.readline()
