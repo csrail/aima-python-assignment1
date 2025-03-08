@@ -22,7 +22,7 @@ def read_initial_state_from_file(filename):
         # create this from a nested list comprehension
         map = [['' for _ in range(columns)] for _ in range(rows)]
 
-        line = f.readline()
+        line = f.readline().strip()
         while line:
             values = line.split(',')
             rockRow = int(values[0])
