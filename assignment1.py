@@ -38,6 +38,7 @@ def read_initial_state_from_file(filename):
 
     return state
 
+# ZenPuzzleGarden subclasses a Problem from the search.py library
 class ZenPuzzleGarden(Problem):
     def __init__(self, initial):
         if type(initial) is str:
@@ -52,23 +53,41 @@ class ZenPuzzleGarden(Problem):
         height = len(map)
         width = len(map[0])
         action_list = []
+        # if agent is on the map, specify ways which the agent can legally move
         if position:
+            # if agent is facing up or down
+            # given the agent is on the first column OR the space to its left is empty
+            ## specify agent's current position and option to move left
+            # given the agent is on the last column OR the space to its right is empty
+            ## specify agent's current position and option to move right 
             if direction in ['up', 'down']:
                 if position[1] == 0 or not map[position[0]][position[1] - 1]:
                     action_list.append((position, 'left'))
                 if position[1] == width - 1 or not map[position[0]][position[1] + 1]:
                     action_list.append((position, 'right'))
+            # if agent is facing left or right
+            # given the agent is on the first row OR the space above is empty
+            ## specify agent's current position and option to move up 
+            # given the agent is on the last row OR the space below is empty
+            ## specify agent's current position and option to move down
             if direction in ['left', 'right']:
                 if position[0] == 0 or not map[position[0] - 1][position[1]]:
                     action_list.append((position, 'up'))
                 if position[0] == height - 1 or not map[position[0] + 1][position[1]]:
                     action_list.append((position, 'down'))
+        # if agent outside map, specify ways which the agent can enter:
         else:
+            # iterate through each row, 
+            # specify how to enter from the left edge
+            # specify how to enter from the right edge
             for i in range(height):
                 if not map[i][0]:
                     action_list.append(((i, 0), 'right'))
                 if not map[i][width - 1]:
                     action_list.append(((i, width - 1), 'left'))
+            # iterate through each column,
+            # specify how to enter from the top edge
+            # specify how to enter from the bottom edge
             for i in range(width):
                 if not map[0][i]:
                     action_list.append(((0, i), 'down'))
@@ -85,6 +104,17 @@ class ZenPuzzleGarden(Problem):
         while True:
             row_i = position[0]
             column_i = position[1]
+            # guard clauses to specify agent's movement to new position based on direction
+            # 5th guard clause analyses the new position:
+            ## GIVEN the agent has exited from the top or bottom edge
+            ## OR whether the agent has exited from the left edge or the right edge
+            ## THEN modify the map to have the final direction
+            ## AND return new map state, agent position and direction indicates exited problem space
+            # 6th guard clause analyses the new position:
+            ## GIVEN the agent has encountered a non empty position, i.e. a rock or raked tile
+            ## THEN return new map state, agent position and direction indicates persistence in problem space
+            # Otherwise agent has not exited, and has not encountered an obstacle:
+            ## agent moves in the specified direction, position is retargeted, direction is perpetuated
             if direction == 'left':
                 new_position = (row_i, column_i - 1)
             if direction == 'up':
@@ -105,7 +135,23 @@ class ZenPuzzleGarden(Problem):
         # Task 2
         # Return a boolean value indicating if a given state is solved.
         # Replace the line below with your code.
-        raise NotImplementedError
+        
+        # goal test returns True when:
+        ## all map cells are non empty
+        ## agent position is None
+        ## agent direction is None
+        # otherwise goal test returns False
+        solution = state[0]
+        position = state[1]
+        direction = state[2]
+        for row in solution:
+            for i in range(len(row)):
+                if (not row[i]):
+                    return False
+        if (position == None and direction == None):
+            return True
+        else:
+            return False 
 
 # Task 3
 # Implement an A* heuristic cost function and assign it to the variable below.
@@ -128,7 +174,6 @@ if __name__ == "__main__":
     
 
     # Task 2 test code
-    '''
     garden = ZenPuzzleGarden('assignment1config.txt')
     print('Running breadth-first graph search.')
     before_time = time()
@@ -140,7 +185,6 @@ if __name__ == "__main__":
         animate(node)
     else:
         print('No solution was found.')
-    '''
 
     # Task 3 test code
     '''
