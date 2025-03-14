@@ -12,7 +12,7 @@ def read_initial_state_from_file(filename):
     # second element is the agent's location
     # third element is the agent's facing direction
     state = [None,None,None]
-    with open(file="./assignment1config.txt", mode="r") as f:
+    with open(file=filename, mode="r") as f:
         # the first two lines of the config file denote the rows and columns
         # of the zen garden
         rows = int(f.readline()[0])
