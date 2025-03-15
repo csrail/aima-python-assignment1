@@ -2,6 +2,10 @@ from time import time
 from search import *
 from assignment1aux import *
 
+config_file = "assignment1config.txt"
+# config_file = "config-test-00.txt"
+# config_file = "config-test-01.txt"
+
 def read_initial_state_from_file(filename):
     # Task 1
     # Return an initial state constructed using a configuration in a file.
@@ -155,7 +159,61 @@ class ZenPuzzleGarden(Problem):
 
 # Task 3
 # Implement an A* heuristic cost function and assign it to the variable below.
-astar_heuristic_cost = None
+# 
+gameMap = read_initial_state_from_file(config_file)
+initial_unraked_count = 0
+
+for row in gameMap[0]:
+    for cell in row:
+        if (not cell):
+            initial_unraked_count += 1
+
+def astar(node, initial_unraked=initial_unraked_count):
+    map = [list(row) for row in node.state[0]]
+    # position = node.state[1]
+    # direction = node.state[2]
+    unraked = 0
+    for row in map:
+        for cell in row:
+            if (not cell):
+                unraked += 1
+    heuristic_cost = unraked/initial_unraked
+    
+    # 0.00024s, 7 cost, 1,
+    # Best outcome: encourages AI to do a depth first search and adds a heuristic cost to its path finding
+    # The more tiles there are to rake in the next state, the higher the heuristic cost, therefore less encouragement for that path
+    # When there are fewer tiles to rake in the next state, the lower the heuristic cost, therefore more encourage for that path
+    # When the heuristic cost is 0, this implies that the next state is the goal state.
+    astar_cost = -node.path_cost + heuristic_cost
+
+    # 29.25284s, 6 cost, LAST
+    # astar_cost = -(node.path_cost + heuristic_cost) 
+
+    # 0.23479s, 5 cost, 3
+    # astar_cost = node.path_cost + heuristic_cost
+    
+    # 4.2031s, 6 cost, 6
+    # astar_cost = -node.path_cost
+
+    # 0.62222, 5 cost, 4
+    # astar_cost = node.path_cost 
+
+    # 0.88820, 5 cost, 5
+    # astar_cost = -heuristic_cost 
+
+    # 0.23873, 5 cost, 2
+    # astar_cost = heuristic_cost 
+
+    # print(":::::::::::::::::::::::::::::::::")
+    # # print("depth: " + str(node.depth))
+    # print("path_cost: " + str(node.path_cost))
+    # print("heuristic_cost: " + str(heuristic_cost))
+    # print("astar_cost: " + str(astar_cost))
+    # for row in map:
+    #     print(row)
+    return astar_cost
+
+astar_heuristic_cost = astar
 
 def beam_search(problem, f, beam_width):
     # Task 4
@@ -168,13 +226,11 @@ def beam_search(problem, f, beam_width):
 if __name__ == "__main__":
 
     # Task 1 test code
-    
     print('The loaded initial state is visualised below.')
-    visualise(read_initial_state_from_file('assignment1config.txt'))
-    
+    visualise(read_initial_state_from_file(config_file))
 
     # Task 2 test code
-    garden = ZenPuzzleGarden('assignment1config.txt')
+    garden = ZenPuzzleGarden(config_file)
     print('Running breadth-first graph search.')
     before_time = time()
     node = breadth_first_graph_search(garden)
@@ -187,7 +243,6 @@ if __name__ == "__main__":
         print('No solution was found.')
 
     # Task 3 test code
-    '''
     print('Running A* search.')
     before_time = time()
     node = astar_search(garden, astar_heuristic_cost)
@@ -198,7 +253,6 @@ if __name__ == "__main__":
         animate(node)
     else:
         print('No solution was found.')
-    '''
 
     # Task 4 test code
     '''
