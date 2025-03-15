@@ -15,8 +15,8 @@ def read_initial_state_from_file(filename):
     with open(file=filename, mode="r") as f:
         # the first two lines of the config file denote the rows and columns
         # of the zen garden
-        rows = int(f.readline()[0])
-        columns = int(f.readline()[0])
+        rows = int(f.readline())
+        columns = int(f.readline())
 
         # create map based on rows and columns
         # create this from a nested list comprehension
