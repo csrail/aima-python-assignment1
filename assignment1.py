@@ -221,7 +221,7 @@ def beam_search(problem, f, beam_width):
                     del frontier[child]
                     frontier.append(child)
         # reorganise the heap
-            while (frontier.heap.__len__() >= beam_width):
+            while (frontier.heap.__len__() > beam_width):
                 try:
                     del frontier.heap[beam_width]
                 except:
