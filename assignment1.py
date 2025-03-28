@@ -174,16 +174,12 @@ def astar_h_cost(node):
     map = node.state[0]
     rows_unraked = 0
     columns_unraked = 0
-    rows = len(map)
-    columns = len(map[0])
-    if (columns > rows):
-        for row in map:
-            if (any(cell == '' for cell in row)):
+    for row in map:
+        if (any(cell == '' for cell in row)):
                 rows_unraked +=1
-        else:
-            for i in range(len(map[0])):
-                if (any(row[i] == '' for row in map)):
-                    columns_unraked += 1
+    for i in range(len(map[0])):
+        if (any(row[i] == '' for row in map)):
+            columns_unraked += 1
 
     count = min(rows_unraked, columns_unraked)
 
