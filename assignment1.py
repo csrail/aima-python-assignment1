@@ -176,7 +176,7 @@ def astar_h_cost(node):
     columns_unraked = 0
     for row in map:
         if (any(cell == '' for cell in row)):
-                rows_unraked +=1
+            rows_unraked +=1
     for i in range(len(map[0])):
         if (any(row[i] == '' for row in map)):
             columns_unraked += 1
