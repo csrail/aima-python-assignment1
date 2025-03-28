@@ -5,7 +5,7 @@ from assignment1aux import *
 config_file = "assignment1config.txt"
 # config_file = "config-test-00-hard.txt"
 # config_file = "config-test-01-hard.txt"
-# config_file = "config-test-02.txt"
+config_file = "config-test-02.txt"
 # config_file = "config-test-03.txt"
 
 def read_initial_state_from_file(filename):
@@ -185,13 +185,7 @@ def astar_h_cost(node):
                 if (any(row[i] == '' for row in map)):
                     columns_unraked += 1
 
-    count = -1
-    if (rows_unraked == 1 or columns_unraked == 1):
-        count = 1
-    elif (rows_unraked + columns_unraked < initial_unraked_count):
-        count = max(rows_unraked, columns_unraked)
-    else:
-        count = rows_unraked + columns_unraked
+    count = min(rows_unraked, columns_unraked)
 
     return count 
 
@@ -236,16 +230,16 @@ if __name__ == "__main__":
 
     # Task 2 test code
     garden = ZenPuzzleGarden(config_file)
-    print('Running breadth-first graph search.')
-    before_time = time()
-    node = breadth_first_graph_search(garden)
-    after_time = time()
-    print(f'Breadth-first graph search took {after_time - before_time} seconds.')
-    if node:
-        print(f'Its solution with a cost of {node.path_cost} is animated below.')
-        animate(node)
-    else:
-        print('No solution was found.')
+    # print('Running breadth-first graph search.')
+    # before_time = time()
+    # node = breadth_first_graph_search(garden)
+    # after_time = time()
+    # print(f'Breadth-first graph search took {after_time - before_time} seconds.')
+    # if node:
+    #     print(f'Its solution with a cost of {node.path_cost} is animated below.')
+    #     animate(node)
+    # else:
+    #     print('No solution was found.')
 
     # Task 3 test code
     print('Running A* search.')
