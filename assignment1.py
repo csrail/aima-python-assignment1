@@ -5,7 +5,7 @@ from assignment1aux import *
 config_file = "assignment1config.txt"
 # config_file = "config-test-00-hard.txt"
 # config_file = "config-test-01-hard.txt"
-config_file = "config-test-02.txt"
+# config_file = "config-test-02.txt"
 # config_file = "config-test-03.txt"
 
 def read_initial_state_from_file(filename):
