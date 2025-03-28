@@ -230,16 +230,16 @@ if __name__ == "__main__":
 
     # Task 2 test code
     garden = ZenPuzzleGarden(config_file)
-    # print('Running breadth-first graph search.')
-    # before_time = time()
-    # node = breadth_first_graph_search(garden)
-    # after_time = time()
-    # print(f'Breadth-first graph search took {after_time - before_time} seconds.')
-    # if node:
-    #     print(f'Its solution with a cost of {node.path_cost} is animated below.')
-    #     animate(node)
-    # else:
-    #     print('No solution was found.')
+    print('Running breadth-first graph search.')
+    before_time = time()
+    node = breadth_first_graph_search(garden)
+    after_time = time()
+    print(f'Breadth-first graph search took {after_time - before_time} seconds.')
+    if node:
+        print(f'Its solution with a cost of {node.path_cost} is animated below.')
+        animate(node)
+    else:
+        print('No solution was found.')
 
     # Task 3 test code
     print('Running A* search.')
